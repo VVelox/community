@@ -36,14 +36,17 @@ common_types=[
             ".bz2",
             ".gz",
             ".bz",
+            ".ace",
             ".tar",
+            ".tgz",
+            ".tbz",
             ]
 
 class NetworkQuestionableHttpPath(Signature):
     name = "network_questionable_http_path"
     description = "Makes a suspicious HTTP request to a commonly exploitable directory with questionable file ext"
     severity = 3
-    confidence = 08
+    confidence = 100
     categories = ["network"]
     authors = ["Zane C. Bowers-Hadley"]
     minimum = "1.3"
@@ -68,9 +71,9 @@ class NetworkQuestionableHttpPath(Signature):
 
 class NetworkSlightlyQuestionableHttpPath(Signature):
     name = "network_slightly_questionable_http_path"
-    description = "Makes a suspicious HTTP request to a commonly exploitable directory"
-    severity = 3
-    confidence = 08
+    description = "Makes a HTTP request to a commonly exploitable directory"
+    severity = 1
+    confidence = 80
     categories = ["network"]
     authors = ["Zane C. Bowers-Hadley"]
     minimum = "1.3"
@@ -97,7 +100,7 @@ class NetworkQuestionableHttpsPath(Signature):
     name = "network_questionable_https_path"
     description = "Makes a suspicious HTTPS request to a commonly exploitable directory with questionable file ext"
     severity = 3
-    confidence = 08
+    confidence = 100
     categories = ["network"]
     authors = ["Zane C. Bowers-Hadley"]
     minimum = "1.3"
@@ -122,9 +125,9 @@ class NetworkQuestionableHttpsPath(Signature):
 
 class NetworkSlightlyQuestionableHttpsPath(Signature):
     name = "network_slightly_questionable_https_path"
-    description = "Makes a suspicious HTTPS request to a commonly exploitable directory"
-    severity = 3
-    confidence = 08
+    description = "Makes a HTTPS request to a commonly exploitable directory"
+    severity = 1
+    confidence = 80
     categories = ["network"]
     authors = ["Zane C. Bowers-Hadley"]
     minimum = "1.3"
