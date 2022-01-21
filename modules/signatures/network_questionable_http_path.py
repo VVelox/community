@@ -22,6 +22,23 @@
 
 from lib.cuckoo.common.abstracts import Signature
 
+common_dirs=[
+            "/wp-content/",
+            "/template/",
+            "/tmp/",
+            "/temp/",
+            "/data/",
+             ]
+common_types=[
+            ".zip",
+            ".exe",
+            ".com",
+            ".bz2",
+            ".gz",
+            ".bz",
+            ".tar",
+            ]
+
 class NetworkQuestionableHttpPath(Signature):
     name = "network_questionable_http_path"
     description = "Makes a suspicious HTTP request to a commonly exploitable directory with questionable file ext"
@@ -34,22 +51,6 @@ class NetworkQuestionableHttpPath(Signature):
     filter_analysistypes = set(["file"])
 
     def run(self):
-        common_dirs=[
-            "/wp-content/",
-            "/template/",
-            "/tmp/",
-            "/temp/",
-            "/data/",
-             ]
-        common_types=[
-            ".zip",
-            ".exe",
-            ".com",
-            ".bz2",
-            ".gz",
-            ".bz",
-            ".tar",
-            ]
         if "network" in self.results and "http" in self.results["network"]:
             for host in self.results["network"]["http"]:
                 path = host["path"]
@@ -77,22 +78,6 @@ class NetworkSlightlyQuestionableHttpPath(Signature):
     filter_analysistypes = set(["file"])
 
     def run(self):
-        common_dirs=[
-            "/wp-content/",
-            "/template/",
-            "/tmp/",
-            "/temp/",
-            "/data/",
-             ]
-        common_types=[
-            ".zip",
-            ".exe",
-            ".com",
-            ".bz2",
-            ".gz",
-            ".bz",
-            ".tar",
-            ]
         if "network" in self.results and "http" in self.results["network"]:
             for host in self.results["network"]["http"]:
                 path = host["path"]
@@ -120,22 +105,6 @@ class NetworkQuestionableHttpsPath(Signature):
     filter_analysistypes = set(["file"])
 
     def run(self):
-        common_dirs=[
-            "/wp-content/",
-            "/template/",
-            "/tmp/",
-            "/temp/",
-            "/data/",
-             ]
-        common_types=[
-            ".zip",
-            ".exe",
-            ".com",
-            ".bz2",
-            ".gz",
-            ".bz",
-            ".tar",
-            ]
         if "network" in self.results and "https" in self.results["network"]:
             for host in self.results["network"]["https"]:
                 path = host["path"]
@@ -163,22 +132,6 @@ class NetworkSlightlyQuestionableHttpsPath(Signature):
     filter_analysistypes = set(["file"])
 
     def run(self):
-        common_dirs=[
-            "/wp-content/",
-            "/template/",
-            "/tmp/",
-            "/temp/",
-            "/data/",
-             ]
-        common_types=[
-            ".zip",
-            ".exe",
-            ".com",
-            ".bz2",
-            ".gz",
-            ".bz",
-            ".tar",
-            ]
         if "network" in self.results and "https" in self.results["network"]:
             for host in self.results["network"]["https"]:
                 path = host["path"]
