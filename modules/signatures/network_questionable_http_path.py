@@ -71,37 +71,6 @@ class NetworkQuestionableHttpPath(Signature):
         else:
             return False
 
-class NetworkSlightlyQuestionableHttpPath(Signature):
-    name = "network_slightly_questionable_http_path"
-    description = "Makes a HTTP request to a commonly exploitable directory"
-    severity = 1
-    confidence = 80
-    categories = ["network"]
-    authors = ["Zane C. Bowers-Hadley"]
-    minimum = "1.3"
-
-    filter_analysistypes = set(["file"])
-
-    def run(self):
-        if "network" in self.results and "http" in self.results["network"]:
-            for host in self.results["network"]["http"]:
-                path = host["path"]
-                lc_path = path.lower()
-                for common_dir in common_dirs:
-                    found_location = lc_path.find(common_dir)
-                    if found_location != -1:
-                        not_matched = True
-                        for common_type in common_types:
-                            if lc_path.find(common_type, found_location) != -1:
-                                not_matched = False
-                        if not_matched
-                            self.data.append({'uri' : host["uri"]})
-
-        if self.data:
-            return True
-        else:
-            return False
-
 class NetworkQuestionableHttpsPath(Signature):
     name = "network_questionable_https_path"
     description = "Makes a suspicious HTTPS request to a commonly exploitable directory with questionable file ext"
@@ -124,36 +93,6 @@ class NetworkQuestionableHttpsPath(Signature):
                         for common_type in common_types:
                             if lc_path.find(common_type, found_location) != -1:
                                 self.data.append({'uri' : host["uri"]})
-        if self.data:
-            return True
-        else:
-            return False
-
-class NetworkSlightlyQuestionableHttpsPath(Signature):
-    name = "network_slightly_questionable_https_path"
-    description = "Makes a HTTPS request to a commonly exploitable directory"
-    severity = 1
-    confidence = 80
-    categories = ["network"]
-    authors = ["Zane C. Bowers-Hadley"]
-    minimum = "1.3"
-
-    filter_analysistypes = set(["file"])
-
-    def run(self):
-        if "network" in self.results and "https" in self.results["network"]:
-            for host in self.results["network"]["https"]:
-                path = host["path"]
-                lc_path = path.lower()
-                for common_dir in common_dirs:
-                    found_location = lc_path.find(common_dir)
-                    if found_location != -1:
-                        not_matched = True
-                        for common_type in common_types:
-                            if lc_path.find(common_type, found_location) != -1:
-                                not_matched = False
-                        if not_matched
-                            self.data.append({'uri' : host["uri"]})
         if self.data:
             return True
         else:
