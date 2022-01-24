@@ -95,8 +95,10 @@ class NetworkSlightlyQuestionableHttpPath(Signature):
                         not_matched = True
                         for common_type in common_types:
                             if lc_path.find(common_type, found_location) == -1 and not_matched:
-                                self.data.append({'uri' : host["uri"]})
                                 not_matched = False
+                        if not_matched
+                            self.data.append({'uri' : host["uri"]})
+
         if self.data:
             return True
         else:
@@ -153,8 +155,9 @@ class NetworkSlightlyQuestionableHttpsPath(Signature):
                         not_matched = True
                         for common_type in common_types:
                             if lc_path.find(common_type, found_location) == -1 and not_matched:
-                                self.data.append({'uri' : host["uri"]})
                                 not_matched = False
+                        if not_matched
+                            self.data.append({'uri' : host["uri"]})
         if self.data:
             return True
         else:
