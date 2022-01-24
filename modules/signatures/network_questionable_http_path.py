@@ -44,10 +44,6 @@ common_types=[
             ".tbz",
             ]
 
-# set to true if questionable is matched so slightly questionable can be skipped
-http_matched = False
-https_matched = False
-
 class NetworkQuestionableHttpPath(Signature):
     name = "network_questionable_http_path"
     description = "Makes a suspicious HTTP request to a commonly exploitable directory with questionable file ext"
@@ -67,10 +63,11 @@ class NetworkQuestionableHttpPath(Signature):
                 for common_dir in common_dirs:
                     found_location = lc_path.find(common_dir)
                     if found_location != -1:
+                        not_matched = True
                         for common_type in common_types:
-                            if lc_path.find(common_type, found_location) != -1:
+                            if lc_path.find(common_type, found_location) != -1 and not_matched:
                                 self.data.append({'uri' : host["uri"]})
-                                http_matched = True
+                                not_matched = False
         if self.data:
             return True
         else:
@@ -88,8 +85,6 @@ class NetworkSlightlyQuestionableHttpPath(Signature):
     filter_analysistypes = set(["file"])
 
     def run(self):
-        if http_matched
-            return False
         if "network" in self.results and "http" in self.results["network"]:
             for host in self.results["network"]["http"]:
                 path = host["path"]
@@ -97,7 +92,11 @@ class NetworkSlightlyQuestionableHttpPath(Signature):
                 for common_dir in common_dirs:
                     found_location = lc_path.find(common_dir)
                     if found_location != -1:
-                        self.data.append({'uri' : host["uri"]})
+                        not_matched = True
+                        for common_type in common_types:
+                            if lc_path.find(common_type, found_location) == -1 and not_matched:
+                                self.data.append({'uri' : host["uri"]})
+                                not_matched = False
         if self.data:
             return True
         else:
@@ -122,10 +121,11 @@ class NetworkQuestionableHttpsPath(Signature):
                 for common_dir in common_dirs:
                     found_location = lc_path.find(common_dir)
                     if found_location != -1:
+                        not_matched = True
                         for common_type in common_types:
-                            if lc_path.find(common_type, found_location) != -1:
+                            if lc_path.find(common_type, found_location) != -1 and not_matched:
                                 self.data.append({'uri' : host["uri"]})
-                                https_matched = True
+                                not_matched = False
         if self.data:
             return True
         else:
@@ -143,8 +143,6 @@ class NetworkSlightlyQuestionableHttpsPath(Signature):
     filter_analysistypes = set(["file"])
 
     def run(self):
-        if https_matched
-            return False
         if "network" in self.results and "https" in self.results["network"]:
             for host in self.results["network"]["https"]:
                 path = host["path"]
@@ -152,7 +150,11 @@ class NetworkSlightlyQuestionableHttpsPath(Signature):
                 for common_dir in common_dirs:
                     found_location = lc_path.find(common_dir)
                     if found_location != -1:
-                        self.data.append({'uri' : host["uri"]})
+                        not_matched = True
+                        for common_type in common_types:
+                            if lc_path.find(common_type, found_location) == -1 and not_matched:
+                                self.data.append({'uri' : host["uri"]})
+                                not_matched = False
         if self.data:
             return True
         else:
