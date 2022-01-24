@@ -63,11 +63,9 @@ class NetworkQuestionableHttpPath(Signature):
                 for common_dir in common_dirs:
                     found_location = lc_path.find(common_dir)
                     if found_location != -1:
-                        not_matched = True
                         for common_type in common_types:
-                            if lc_path.find(common_type, found_location) != -1 and not_matched:
+                            if lc_path.find(common_type, found_location) != -1:
                                 self.data.append({'uri' : host["uri"]})
-                                not_matched = False
         if self.data:
             return True
         else:
@@ -94,7 +92,7 @@ class NetworkSlightlyQuestionableHttpPath(Signature):
                     if found_location != -1:
                         not_matched = True
                         for common_type in common_types:
-                            if lc_path.find(common_type, found_location) == -1 and not_matched:
+                            if lc_path.find(common_type, found_location) != -1:
                                 not_matched = False
                         if not_matched
                             self.data.append({'uri' : host["uri"]})
@@ -123,11 +121,9 @@ class NetworkQuestionableHttpsPath(Signature):
                 for common_dir in common_dirs:
                     found_location = lc_path.find(common_dir)
                     if found_location != -1:
-                        not_matched = True
                         for common_type in common_types:
-                            if lc_path.find(common_type, found_location) != -1 and not_matched:
+                            if lc_path.find(common_type, found_location) != -1:
                                 self.data.append({'uri' : host["uri"]})
-                                not_matched = False
         if self.data:
             return True
         else:
@@ -154,7 +150,7 @@ class NetworkSlightlyQuestionableHttpsPath(Signature):
                     if found_location != -1:
                         not_matched = True
                         for common_type in common_types:
-                            if lc_path.find(common_type, found_location) == -1 and not_matched:
+                            if lc_path.find(common_type, found_location) != -1:
                                 not_matched = False
                         if not_matched
                             self.data.append({'uri' : host["uri"]})
